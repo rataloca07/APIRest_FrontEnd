@@ -1,0 +1,7 @@
+#contenedor{
+    overflow: hidden !important;
+    padding-bottom: 100px !important;
+}
+.swal2-cancel{
+    margin-right: 15px !important;
+}

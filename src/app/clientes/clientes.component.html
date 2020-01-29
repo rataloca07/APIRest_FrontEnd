@@ -1,0 +1,47 @@
+
+
+<app-detalle *ngIf="clienteSeleccionado" [cliente]="clienteSeleccionado"></app-detalle>
+
+<div id="card-clientes" class="card border-primary p-3 mt-3 text-primary text-center">
+  <div class="card-header">
+    <h3>Clientes</h3>
+  </div>
+  <div class="card-body">
+    <h2>Listado de Clientes</h2>
+    <button class="btn btn-primary" [routerLink]="['/clientes/form']">Crear Cliente</button>
+  </div>
+  <div *ngIf="clientes?.length == 0 " class="alert alert-warning">
+    No hay registros en la base de datos
+  </div>
+  <table class="table table-bordered table-striped" *ngIf="clientes?.length>0">
+    <thead>
+      <th>#</th>
+      <th>Nombre</th>
+      <th>Apellido</th>
+      <th>Email</th>
+      <th>Fecha</th>
+      <th>Editar</th>
+      <th>Eliminar</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let cliente of clientes; let i=index" class="text-primary">
+        <!--<td><button type="button" [routerLink]="['/clientes/ver',cliente.id]"  class="btn btn-success btn-sm">{{cliente.id}}</button></td>-->
+        <!--<td><button type="button" (click)="abrirModal(cliente)"  class="btn btn-success btn-sm">{{cliente.id}}</button></td>-->
+        <td><img (click)="abrirModal(cliente)" *ngIf="cliente?.foto" src="http://localhost:8080/api/uploads/img/{{cliente.foto}}" alt="" 
+          class="img-thumbnail img-sm rounded" style="width:64px; cursor:pointer;">
+          <img (click)="abrirModal(cliente)" *ngIf="!cliente?.foto" src="http://localhost:8080/images/no-usuario.png" alt="" 
+          class="img-thumbnail img-sm rounded" style="width:64px; cursor:pointer;"></td>
+        <td>{{cliente.nombre}}</td>
+        <td>{{cliente.apellido | uppercase}} </td>
+        <td>{{cliente.email}}</td>
+        <td>{{cliente.createAt | date:'EEEE dd, MMMM yyyy'}}</td>
+        <td><button class="btn btn-primary" [routerLink]="['/clientes/form',cliente.id]">Editar</button></td>
+        <td><button class="btn btn-danger" (click)="delete(cliente)">Eliminar</button></td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="align-self-center">
+    <app-paginator *ngIf="paginador" [paginador]="paginador"></app-paginator>
+  </div>
+</div>
+
